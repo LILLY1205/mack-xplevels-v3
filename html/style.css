@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
+
+@font-face {
+    font-family: 'Crock';
+    src: url('font/crock.ttf');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background: transparent;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+/* ===== App State ===== */
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#app.visible {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* ===== Clipboard ===== */
+.clipboard-container {
+    width: 1000px;
+    height: 1450px;
+    background-image: url('img/clipboard.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center top;
+    position: relative;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.7));
+    z-index: 10;
+}
+
+#app.visible .clipboard-container {
+    transform: translateY(28%);
+}
+
+/* ===== Paper Area ===== */
+.paper-area {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    right: 10%;
+    bottom: 8%;
+    padding: 20px 50px;
+    font-family: 'Courier Prime', monospace;
+    color: #1a1510;
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* ===== Scrollable Content ===== */
+.content-scrollable {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-top: 15px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.content-scrollable::-webkit-scrollbar-track {
+    background: rgba(44, 36, 27, 0.05);
+}
+
+.content-scrollable::-webkit-scrollbar-thumb {
+    background: #1a1510;
+    border-radius: 2px;
+}
+
+/* ===== Typography ===== */
+.stamped-header {
+    font-family: 'Crock', serif;
+    font-size: 42px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #1a1510;
+    border-bottom: 2px solid #1a1510;
+    padding-bottom: 8px;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+    opacity: 0.95;
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.4);
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2 {
+    font-family: 'Crock', serif;
+    font-size: 26px;
+    border-bottom: 2px solid #1a1510;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    color: #1a1510;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    text-shadow: none;
+}
+
+/* ===== Header Section ===== */
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-tab {
+    background: transparent;
+    border: none;
+    padding: 5px 10px;
+    font-family: 'Crock', serif;
+    font-size: 16px;
+    cursor: pointer;
+    color: #1a1510;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.close-tab:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+/* ===== Tab Bar ===== */
+.tab-bar {
+    display: flex;
+    gap: 0;
+    width: 90%;
+    margin: 12px auto 0 auto;
+    border-bottom: 2px solid #1a1510;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 0;
+    font-family: 'Crock', serif;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #5a4a3a;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    margin-bottom: -2px;
+}
+
+.tab-btn:hover {
+    color: #1a1510;
+}
+
+.tab-btn.active {
+    color: #1a1510;
+    border-bottom-color: #1a1510;
+    font-weight: bold;
+}
+
+/* ===== Tab Content ===== */
+.tab-content {
+    display: none;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* ===== List Container (lined paper) ===== */
+.list-container {
+    max-height: 280px;
+    overflow-y: auto;
+    border: none;
+    background-color: transparent;
+    background-image: repeating-linear-gradient(
+        transparent, transparent 31px,
+        rgba(168, 209, 255, 0.4) 31px, rgba(168, 209, 255, 0.4) 32px
+    );
+    background-attachment: local;
+    line-height: 32px;
+    padding: 0 10px;
+    width: 96%;
+    margin: 0 auto;
+    box-shadow: none;
+}
+
+.list-container.full-list {
+    max-height: none;
+}
+
+.list-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.list-container::-webkit-scrollbar-track {
+    background: rgba(44, 36, 27, 0.05);
+}
+
+.list-container::-webkit-scrollbar-thumb {
+    background: rgba(26, 21, 16, 0.4);
+    border-radius: 2px;
+}
+
+/* ===== Ranked Player Item ===== */
+.ranked-item {
+    padding: 8px 10px;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1a1510;
+    border-bottom: 1px dotted rgba(90, 74, 58, 0.3);
+    line-height: 1.4;
+}
+
+.ranked-item:hover {
+    background: rgba(44, 36, 27, 0.05);
+}
+
+.ranked-item.current-player {
+    background: rgba(45, 90, 30, 0.1);
+}
+
+.rank-number {
+    font-family: 'Crock', serif;
+    font-size: 22px;
+    min-width: 36px;
+    text-align: center;
+    color: #1a1510;
+}
+
+.level-badge {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid rgba(26, 21, 16, 0.5);
+    opacity: 0.9;
+}
+
+.ranked-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.3;
+}
+
+.ranked-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #1a1510;
+}
+
+.ranked-xp {
+    font-size: 12px;
+    color: #3e3226;
+    font-style: italic;
+}
+
+/* ===== XP Progress Bar ===== */
+.xp-bar-container {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.xp-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(44, 36, 27, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid rgba(44, 36, 27, 0.2);
+}
+
+.xp-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.xp-bar-fill.green {
+    background: #2d5a1e;
+}
+
+.xp-bar-fill.yellow {
+    background: #8a6d1b;
+}
+
+.xp-bar-fill.red {
+    background: #6b2020;
+}
+
+/* ===== Stat Item ===== */
+.stat-item {
+    padding: 10px;
+    border-bottom: 1px dotted rgba(90, 74, 58, 0.3);
+    line-height: 1.4;
+}
+
+.stat-item:hover {
+    background: rgba(44, 36, 27, 0.05);
+}
+
+.stat-item.current-player {
+    background: rgba(45, 90, 30, 0.1);
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.stat-name {
+    font-weight: bold;
+    font-size: 14px;
+    color: #1a1510;
+}
+
+.stat-xp-text {
+    font-size: 12px;
+    color: #3e3226;
+    font-style: italic;
+}
+
+/* ===== Search Input ===== */
+.search-input {
+    width: 96%;
+    margin: 0 auto 10px auto;
+    display: block;
+    padding: 8px 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 14px;
+    color: #1a1510;
+    background: rgba(44, 36, 27, 0.03);
+    border: 1px solid #1a1510;
+    border-radius: 2px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #5a4a3a;
+    font-style: italic;
+}
+
+.search-input:focus {
+    background: rgba(44, 36, 27, 0.06);
+}
+
+/* ===== Load More Button ===== */
+.load-more-btn {
+    display: block;
+    margin: 12px auto;
+    padding: 6px 20px;
+    font-family: 'Crock', serif;
+    font-size: 16px;
+    color: #1a1510;
+    background: transparent;
+    border: 1px solid #1a1510;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 1px;
+}
+
+.load-more-btn:hover {
+    background: rgba(44, 36, 27, 0.08);
+}
+
+.load-more-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ===== Empty State ===== */
+.empty-state {
+    text-align: center;
+    padding: 30px 10px;
+    font-style: italic;
+    color: #5a4a3a;
+    font-size: 14px;
+}

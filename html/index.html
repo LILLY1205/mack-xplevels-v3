@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>XP Leaderboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <div class="clipboard-container">
+            <div class="paper-area">
+                <div class="header-section">
+                    <h1 class="stamped-header">XP Leaderboard</h1>
+                    <button class="close-tab" id="close-btn">Close</button>
+                </div>
+
+                <!-- TABS -->
+                <div class="tab-bar">
+                    <button class="tab-btn active" data-tab="top">Top Players</button>
+                    <button class="tab-btn" data-tab="stats">Player Statistics</button>
+                </div>
+
+                <div class="content-scrollable">
+                    <!-- TOP PLAYERS TAB -->
+                    <div class="tab-content active" id="tab-top">
+                        <div id="rankedList" class="list-container full-list"></div>
+                    </div>
+
+                    <!-- PLAYER STATS TAB -->
+                    <div class="tab-content" id="tab-stats">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search players...">
+                        <div id="statsList" class="list-container full-list"></div>
+                        <button id="loadMoreButton" class="load-more-btn">Load More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
